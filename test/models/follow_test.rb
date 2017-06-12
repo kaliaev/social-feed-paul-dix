@@ -21,4 +21,23 @@ class FollowTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+  def setup
+    @michael = User.new(name: 'michael').save!
+    @archer = User.new(name: 'archer').save!
+    @follow = Follow.new(user_id: User.find_by_name(:michael).id, followed_user_id: User.find_by_name(:archer).id)
+  end
+ 
+  test "should be valid" do 
+    assert @follow.valid?
+  end
+  
+  test "should require a followed_user_id" do 
+    @follow.followed_user_id = nil
+    assert_not @follow.valid?
+  end
+  
+  test "should require a user_id" do
+    @follow.user_id = nil
+    assert_not @follow.valid? 
+  end
 end
