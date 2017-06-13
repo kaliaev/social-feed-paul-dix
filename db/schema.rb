@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612192833) do
+ActiveRecord::Schema.define(version: 20170613121954) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "entries", force: :cascade do |t|
+    t.bigint "feed_id"
+    t.string "title", limit: 255
+    t.string "url", limit: 255
+    t.text "content"
+    t.datetime "published_date"
+    t.integer "up_votes_count"
+    t.integer "down_votes_count"
+    t.integer "comments_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_entries_on_feed_id"
+  end
+
+  create_table "feeds", force: :cascade do |t|
+    t.string "title", limit: 255
+    t.string "url", limit: 255
+    t.string "feed_url", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "follows", force: :cascade do |t|
     t.integer "user_id"
@@ -22,6 +47,15 @@ ActiveRecord::Schema.define(version: 20170612192833) do
     t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "feed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_subscriptions_on_feed_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 255
     t.string "email", limit: 255
@@ -30,4 +64,7 @@ ActiveRecord::Schema.define(version: 20170612192833) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "entries", "feeds"
+  add_foreign_key "subscriptions", "feeds"
+  add_foreign_key "subscriptions", "users"
 end
