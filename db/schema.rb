@@ -18,14 +18,13 @@ ActiveRecord::Schema.define(version: 20170613130319) do
   create_table "activities", force: :cascade do |t|
     t.string "type", limit: 255
     t.text "content"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.integer "feed_id"
     t.integer "followed_user_id"
     t.integer "entry_id"
     t.integer "following_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -97,7 +96,6 @@ ActiveRecord::Schema.define(version: 20170613130319) do
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
-  add_foreign_key "activities", "users"
   add_foreign_key "comments", "entries"
   add_foreign_key "comments", "users"
   add_foreign_key "entries", "feeds"

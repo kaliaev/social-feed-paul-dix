@@ -1,2 +1,3 @@
 class VoteActivity < Activity
+  
 end

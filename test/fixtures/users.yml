@@ -13,11 +13,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email: MyString
-  bio: MyString
+  id: 1
+  name: michael
+  email: example@dot.org
+  bio: Ruby roid
 
 two:
-  name: MyString
-  email: MyString
-  bio: MyString
+  id: 2
+  name: archer
+  email: email@example.org
+  bio: Ruby miner
